@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OkWow Rewards - Premium Offers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #161616;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --primary: #2980b9;
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --neon-green: #0aff60;
+            --neon-red: #ff0055;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-white); 
+            overflow-x: hidden; 
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- RGB ANIMATIONS --- */
+        @keyframes rgb-rotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- HEADER --- */
+        header { 
+            background: rgba(22, 22, 22, 0.9); 
+            padding: 20px 0; 
+            border-bottom: 1px solid #333; 
+            position: sticky; top: 0; z-index: 1000; 
+            backdrop-filter: blur(10px);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { 
+            font-size: 2rem; 
+            font-weight: 800; 
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            text-align: center; 
+            padding: 100px 20px 60px; 
+            background: radial-gradient(circle at center, #222 0%, #0a0a0a 70%);
+            position: relative;
+        }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+            font-weight: 800;
+        }
+        
+        .hero span { color: var(--neon-blue); text-shadow: 0 0 20px rgba(0, 243, 255, 0.5); }
+        
+        .hero p { 
+            font-size: 1.2rem; 
+            color: var(--text-gray); 
+            max-width: 700px; 
+            margin: 0 auto 30px; 
+        }
+
+        /* Countdown Timer */
+        .timer-box {
+            display: inline-flex;
+            gap: 15px;
+            background: #1a1a1a;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid #333;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+        }
+        .timer-item { text-align: center; }
+        .timer-num { font-size: 1.5rem; font-weight: bold; color: var(--neon-purple); display: block; }
+        .timer-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+
+        /* --- LIVE STATS BAR --- */
+        .stats-bar {
+            background: #111;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            padding: 15px 0;
+            margin-bottom: 60px;
+        }
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        .stat-item h3 { font-size: 1.8rem; color: var(--text-white); margin-bottom: 5px; }
+        .stat-item p { color: var(--text-gray); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- RGB CARDS SECTION --- */
+        .offers-section { padding: 40px 20px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .section-header .line { width: 80px; height: 4px; background: var(--neon-blue); margin: 0 auto; border-radius: 2px; box-shadow: 0 0 10px var(--neon-blue); }
+
+        .offers-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 40px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        /* The RGB Card Wrapper */
+        .card-wrapper {
+            position: relative;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            padding: 3px; 
+            background-size: 400%;
+            animation: rgb-rotate 20s linear infinite;
+            transition: transform 0.3s;
+        }
+        .card-wrapper:hover { transform: translateY(-10px); }
+        .card-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            background: inherit;
+            background-size: 400%;
+            border-radius: 25px;
+            filter: blur(20px);
+            opacity: 0.7;
+            z-index: -1;
+            animation: rgb-rotate 20s linear infinite;
+        }
+
+        .offer-card { 
+            background: var(--bg-card); 
+            border-radius: 18px; 
+            padding: 40px 30px; 
+            text-align: center; 
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .brand-badge {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            align-self: center;
+        }
+
+        .offer-amount { 
+            font-size: 4rem; 
+            font-weight: 900; 
+            margin: 10px 0; 
+            background: linear-gradient(to bottom, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .offer-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; }
+        .offer-desc { color: var(--text-gray); margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* RGB Lighting Button */
+        .neon-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #000;
+            text-transform: uppercase;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            transition: 0.3s;
+            cursor: pointer;
+            letter-spacing: 1px;
+            margin-top: auto;
+        }
+
+        /* Specific Button Colors & Glows */
+        .btn-fd { background: var(--neon-purple); box-shadow: 0 0 15px rgba(188, 19, 254, 0.4); }
+        .btn-ae { background: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); }
+        .btn-aldi { background: var(--neon-green); box-shadow: 0 0 15px rgba(10, 255, 96, 0.4); }
+
+        .neon-btn:hover { 
+            color: #fff; 
+            background: #fff; 
+            box-shadow: 0 0 40px #fff, 0 0 10px #fff; 
+            transform: scale(1.05);
+        }
+
+        /* --- HOW IT WORKS --- */
+        .steps-section { padding: 80px 20px; background: #0f0f0f; }
+        .steps-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            text-align: center; 
+        }
+        .step-card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+        .step-card:hover { border-color: var(--neon-blue); transform: scale(1.02); }
+        .step-num { 
+            font-size: 3rem; 
+            font-weight: 900; 
+            color: rgba(255,255,255,0.05); 
+            line-height: 1; 
+            margin-bottom: -20px; 
+            display: block; 
+        }
+        .step-title { font-size: 1.3rem; margin-bottom: 10px; color: var(--neon-blue); }
+
+        /* --- FAQ SECTION --- */
+        .faq-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: #161616;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            border-left: 4px solid var(--neon-purple);
+        }
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: #050505; 
+            padding: 60px 20px 30px; 
+            border-top: 1px solid #222; 
+            color: #777; 
+            font-size: 0.85rem; 
+            text-align: center;
+        }
+        .footer-links { margin-bottom: 30px; }
+        .footer-links a { margin: 0 15px; color: #aaa; }
+        .footer-links a:hover { color: var(--neon-blue); }
+        .secure-badge { margin: 20px 0; filter: grayscale(100%); opacity: 0.5; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-flex { flex-direction: column; gap: 15px; }
+            .stats-grid { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">OkWow<span style="color:white; font-size: 0.5em; vertical-align: super; margin-left:5px;">OFFICIAL</span></div>
+            <nav>
+                <a href="#offers" style="color: #fff; margin-left: 20px;">Rewards</a>
+                <a href="#faq" style="color: #bbb; margin-left: 20px;">FAQ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="timer-box">
+            <div class="timer-item">
+                <span class="timer-num" id="hours">02</span>
+                <span class="timer-label">Hours</span>
+            </div>
+            <span style="font-size: 1.5rem; color:#444;">:</span>
+            <div class="timer-item">
+                <span class="timer-num" id="minutes">45</span>
+                <span class="timer-label">Mins</span>
+            </div>
+            <span style="font-size: 1.5rem; color:#444;">:</span>
+            <div class="timer-item">
+                <span class="timer-num" id="seconds">12</span>
+                <span class="timer-label">Secs</span>
+            </div>
+        </div>
+
+        <h1>EXCLUSIVE <br><span>REWARDS EVENT</span></h1>
+        <p>You have been selected to participate. Choose your premium reward card below before the timer runs out.</p>
+        <a href="#offers" style="display:inline-block; padding: 12px 30px; border: 1px solid var(--neon-blue); color: var(--neon-blue); border-radius: 30px; font-weight:600;">View All Offers ↓</a>
+    </section>
+
+    <!-- Live Stats Bar -->
+    <div class="stats-bar">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3>1,245</h3>
+                <p>Users Online</p>
+            </div>
+            <div class="stat-item">
+                <h3 style="color: var(--neon-green);">342</h3>
+                <p>Claimed Today</p>
+            </div>
+            <div class="stat-item">
+                <h3 style="color: var(--neon-purple);">98%</h3>
+                <p>Satisfaction</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offers Section (RGB Cards) -->
+    <section class="offers-section" id="offers">
+        <div class="section-header">
+            <h2>Choose Your Reward</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="offers-grid">
+            
+            <!-- Card 1: Family Dollar -->
+            <div class="card-wrapper">
+                <div class="offer-card">
+                    <span class="brand-badge" style="border-color: #e74c3c; color: #e74c3c;">HOT OFFER</span>
+                    <div class="offer-title" style="color:#e74c3c;">Family Dollar</div>
+                    <div class="offer-amount">$500</div>
+                    <p class="offer-desc">Complete the program requirements to receive a $500 Gift Card for Family Dollar.</p>
+                    
+                    <!-- New Tab Link Added Here -->
+                    <a href="https://www.af9m8trk.com/YZV11FRY/TTR12295/?s3=Dervy" class="neon-btn btn-fd" target="_blank" rel="noopener noreferrer">CLAIM NOW</a>
+                </div>
+            </div>
+
+            <!-- Card 2: American Eagle -->
+            <div class="card-wrapper">
+                <div class="offer-card">
+                    <span class="brand-badge" style="border-color: #fff; color: #fff;">FASHION</span>
+                    <div class="offer-title">American Eagle</div>
+                    <div class="offer-amount">$100</div>
+                    <p class="offer-desc">Refresh your wardrobe. Claim your $100 American Eagle Outfitters card today.</p>
+                    
+                    <!-- New Tab Link Added Here -->
+                    <a href="https://www.af9m8trk.com/YZV11FRY/MJP12296/?s4=Suha" class="neon-btn btn-ae" target="_blank" rel="noopener noreferrer">CLAIM NOW</a>
+                </div>
+            </div>
+
+            <!-- Card 3: Aldi -->
+            <div class="card-wrapper">
+                <div class="offer-card">
+                    <span class="brand-badge" style="border-color: #27ae60; color: #27ae60;">GROCERY</span>
+                    <div class="offer-title" style="color:#27ae60;">Aldi Store</div>
+                    <div class="offer-amount">$100</div>
+                    <p class="offer-desc">Get fresh groceries for free. Claim your $100 Aldi gift card instantly.</p>
+                    
+                    <!-- New Tab Link Added Here -->
+                    <a href="https://www.af9m8trk.com/YZV11FRY/GDZ122L3/?s1=Kelly" class="neon-btn btn-aldi" target="_blank" rel="noopener noreferrer">CLAIM NOW</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="steps-section">
+        <div class="section-header">
+            <h2>3 Simple Steps</h2>
+            <div class="line"></div>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-num">1</span>
+                <div class="step-title">Select Offer</div>
+                <p style="color:#888;">Choose the gift card you want from the list above.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">2</span>
+                <div class="step-title">Verify Info</div>
+                <p style="color:#888;">Enter your basic details to confirm you are a real person.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-num">3</span>
+                <div class="step-title">Get Code</div>
+                <p style="color:#888;">Complete the deals and get your code sent via email!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <div class="line"></div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Is this really free?</div>
+            <div class="faq-answer">Yes! Participation is free. However, some reward paths may require you to try out paid services or purchase products to reach the required points level.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">When do I get my Gift Card?</div>
+            <div class="faq-answer">Once you complete the required number of deals, your gift card code is typically emailed to you within 24-48 hours after verification.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I claim more than one?</div>
+            <div class="faq-answer">Generally, there is a limit of one reward per household per specific time period. Please check the specific terms and conditions for each offer.</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Support</a>
+                <a href="#">Affiliates</a>
+            </div>
+            
+            <p style="margin-bottom: 20px; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <strong>Disclaimer:</strong> This website is an independent rewards program. We are not affiliated with, endorsed by, or sponsored by Family Dollar, American Eagle, Aldi, or any other brands listed. All trademarks remain the property of their respective owners.
+            </p>
+            
+            <div class="secure-badge">
+                <span style="border: 1px solid #444; padding: 5px 10px; border-radius: 4px; font-size: 0.7rem;">SSL SECURE ENCRYPTION</span>
+            </div>
+
+            <p>&copy; 2024 OkWow Rewards Program. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for Timer -->
+    <script>
+        function startTimer(duration, displayHours, displayMinutes, displaySeconds) {
+            var timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                displayHours.textContent = hours;
+                displayMinutes.textContent = minutes;
+                displaySeconds.textContent = seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var timeInSeconds = 9800; // 2 hours 43 mins approx
+            var displayHours = document.querySelector('#hours');
+            var displayMinutes = document.querySelector('#minutes');
+            var displaySeconds = document.querySelector('#seconds');
+            startTimer(timeInSeconds, displayHours, displayMinutes, displaySeconds);
+        };
+    </script>
+</body>
+</html>
